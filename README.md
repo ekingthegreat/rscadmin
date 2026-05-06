@@ -37,4 +37,3 @@ This system is built to improve disaster preparedness and response by allowing a
 
 ---
 
-## 📂 Project Structure
