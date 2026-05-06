@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | RSC Dashboard</title>
+    <link rel="icon" type="image/png" href="img/logo.ico">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1>RSC</h1>
+            <p>Ready to Serve the Community</p>
+        </div>
+        <!-- Hamburger icon for main navbar -->
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <nav id="navbar">
+            <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="interactivemap.html"><i class="fas fa-map"></i> Interactive Map</a>
+            <a href="statistic.html"><i class="fas fa-chart-bar"></i> Statistic</a>
+            <a href="notification.html"><i class="fas fa-bell"></i> Notification</a>
+            <a href="manageuser.html"><i class="fas fa-users-cog"></i> Manage Users</a>
+            <a href="announcement.html"><i class="fas fa-bullhorn"></i> Announcement</a>
+            <a href="profile.html" class="active"><i class="fas fa-user"></i> Profile</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="profile-container">
+            <div class="sidebar">
+                <div class="user-info">
+                    <div class="avatar" id="sidebarAvatar">
+                        <i class="fas fa-user-circle" id="sidebarAvatarIcon"></i>
+                    </div>
+                    <h3 id="profileFullname">Loading...</h3>
+                    <p id="profilePhone">Loading...</p>
+                </div>
+                <!-- Hamburger icon for profile navigation -->
+                <div class="profile-menu-toggle" id="profileMenuToggle">
+                    <i class="fas fa-bars"></i> Profile Menu
+                </div>
+                <nav class="profile-nav" id="profileNav">
+                    <a href="myaccount.html"><i class="fas fa-user"></i> My Account</a>
+                    <a href="profile.html" class="active"><i class="fas fa-edit"></i> Edit Profile</a>
+                    <a href="changepass.html"><i class="fas fa-key"></i> Change Password</a>
+                    <a href="term_privacy.html"><i class="fas fa-file-contract"></i> Term and Privacy Policy</a>
+                    <a href="#" data-logout><i class="fas fa-sign-out-alt"></i> Log out</a>
+                </nav>
+            </div>
+
+            <div class="profile-content">
+                <div class="profile-card">
+                    <h2><i class="fas fa-edit"></i> Edit Profile</h2>
+                    
+                    <!-- Profile Picture Section -->
+                    <div class="profile-picture-section">
+                        <div class="profile-avatar-container">
+                            <div class="profile-avatar" id="profileAvatar">
+                                <i class="fas fa-user-circle" id="avatarIcon"></i>
+                            </div>
+                        </div>
+                        <div class="profile-info">
+                            <div class="profile-name" id="profileName">Loading...</div>
+                            <div class="profile-contact" id="profileContact">Loading...</div>
+                        </div>
+                        <input type="file" id="fileInput" class="file-input" accept="image/*">
+                        <label for="fileInput" class="upload-btn" id="uploadBtn">
+                            <i class="fas fa-camera"></i> Change Profile
+                        </label>
+                        <div class="upload-status" id="uploadStatus"></div>
+                    </div>
+                    
+                    <!-- Profile Form -->
+                    <form class="profile-form" id="profileForm">
+                        <div class="form-group">
+                            <label for="fullname">Full name</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="fullname" placeholder="Enter new name" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-at"></i>
+                                <input type="text" id="username" placeholder="Enter new username" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact">Contact number</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-phone"></i>
+                                <input type="tel" id="contact" placeholder="00xx-xxxx-xxxx" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" placeholder="Enter email" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="save-btn">Save Changes</button>
+                    </form>
+                    <div id="updateMessage" class="message" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Profile Picture Modal -->
+    <div class="profile-modal" id="profileModal">
+        <button class="close-profile-modal" id="closeProfileModal">&times;</button>
+        <div class="profile-modal-content">
+            <img id="modalProfileImage" src="" alt="Profile Picture">
+        </div>
+    </div>
+
+    <!-- Logout Modal -->
+    <div class="modal-overlay" id="logoutModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Confirm Logout</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to log out?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel">Cancel</button>
+                <button class="btn-confirm">Yes, Log Out</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal-overlay" id="successModal">
+        <div class="success-modal-container">
+            <div class="success-modal-header">
+                <h3><i class="fas fa-check-circle"></i> Success</h3>
+                <button class="close-success-modal">&times;</button>
+            </div>
+            <div class="success-modal-body">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <p>Your profile has been updated successfully!</p>
+            </div>
+            <div class="success-modal-footer">
+                <button id="successModalOkButton">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <!-- Include Supabase JS library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="js/profile.js"></script>
+</body>
+
+</html>

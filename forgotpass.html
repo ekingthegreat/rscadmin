@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forgot Password - RSC</title>
+  <link rel="icon" type="image/png" href="assets/img/logo.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <link rel="stylesheet" href="css/forgot.css">
+  <style>
+    
+  </style>
+</head>
+<body>
+  <!-- Configuration Warning -->
+  <div class="config-warning" id="configWarning" style="display: none;">
+    <strong>Configuration Required:</strong> Please set up your Firebase configuration in the code.
+  </div>
+
+
+
+  <!-- Main Content -->
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <h2 class="login-title">Forgot Password</h2>
+        <p class="login-subtitle">Enter your email to get a password reset link</p>
+      </div>
+
+      <!-- Error Message -->
+      <div class="error-message" id="errorMessage"></div>
+      
+      <!-- Success Message -->
+      <div class="success-message" id="successMessage"></div>
+      
+      <form id="passwordForm">
+        <div class="form-group">
+          <label for="email" class="form-label">Email</label>
+          <div class="input-with-icon">
+            <i class="fas fa-envelope input-icon"></i>
+            <input type="email" id="email" class="form-input" placeholder="Enter your email" required />
+          </div>
+        </div>
+
+        <button type="submit" id="submitBtn" class="login-button">Send Reset Link</button>
+      </form>
+
+      <div class="login-footer">
+        <p>Remember your password? <a href="login.html" class="signup-link">Back to Sign In</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2025 RSC. All rights reserved.</p>
+  </div>
+<script src="js/firebaseconfig.js"></script>
+  
+  <script src="js/forgot.js"> </script>
+</body>
+</html>

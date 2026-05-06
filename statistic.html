@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics | RSC Dashboard</title>
+    <link rel="icon" type="image/png" href="img/logo.png">
+    <link rel="stylesheet" href="css/statistic.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+</head>
+
+<body>
+    <!-- Premium Header -->
+    <header>
+        <div class="logo">
+            <h1>RSC</h1>
+            <p>Ready to Serve the Community</p>
+        </div>
+        <!-- Hamburger icon -->
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <nav id="navbar">
+            <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="interactivemap.html"><i class="fas fa-map"></i> Interactive Map</a>
+            <a href="statistic.html" class="active"><i class="fas fa-chart-bar"></i> Statistic</a>
+            <a href="notification.html"><i class="fas fa-bell"></i> Notification</a>
+            <a href="manageuser.html"><i class="fas fa-users-cog"></i> Manage Users</a>
+            <a href="announcement.html"><i class="fas fa-bullhorn"></i> Announcement</a>
+            <a href="myaccount.html"><i class="fas fa-user"></i> Profile</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h2>Incident Statistics</h2>
+            <p>Real-time data from emergency reports</p>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="filter-controls">
+            <div class="filter-group">
+                <span class="filter-label">Time Period:</span>
+                <select class="filter-select" id="timeFilter">
+                    <option value="all">All Time</option>
+                    <option value="last12">Last 12 Months</option>
+                    <option value="last6">Last 6 Months</option>
+                    <option value="last3">Last 3 Months</option>
+                    <option value="current" selected>Current Year</option>
+                    <option value="custom">Custom Range</option>
+                </select>
+            </div>
+            
+            <!-- Custom Date Range Filter -->
+            <div class="filter-group custom-date-range" id="customDateRange" style="display: none;">
+                <span class="filter-label">From:</span>
+                <input type="date" class="filter-select date-input" id="fromDate">
+                
+                <span class="filter-label">To:</span>
+                <input type="date" class="filter-select date-input" id="toDate">
+            </div>
+            
+            <div class="filter-group">
+                <span class="filter-label">Incident Type:</span>
+                <select class="filter-select" id="incidentFilter">
+                    <option value="all">All Incidents</option>
+                    <option value="landslide">Landslide</option>
+                    <option value="fire">Fire</option>
+                    <option value="flood">Flood</option>
+                    <option value="earthquake">Earthquake</option>
+                    <option value="storm">Storm Surge</option>
+                    <option value="ems">Emergency Medical Services</option>
+                </select>
+            </div>
+            <div class="filter-buttons">
+                <button class="export-btn" id="exportPDF">
+                    <i class="fas fa-file-pdf"></i> Export PDF
+                </button>
+            </div>
+        </div>
+
+        <div class="stats-dashboard">
+            <!-- Incident Overview -->
+            <div class="incident-overview">
+                <h3>NUMBER OF INCIDENTS</h3>
+                
+                <!-- Interactive Chart -->
+                <div class="chart-container">
+                    <canvas id="incidentChart"></canvas>
+                </div>
+                
+                <!-- Legend Section -->
+                
+                <div class="additional-stats">
+                    <!-- Landslide Stats -->
+                    <div class="stat-card">
+                        <h4>TOTAL NUMBER OF LANDSLIDE</h4>
+                        <div class="stat-item">
+                            <span class="stat-label">Total number of LANDSLIDE:</span>
+                            <span class="stat-number" id="landslide-count">0</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Fire Stats -->
+                    <div class="stat-card">
+                        <h4>TOTAL NUMBER OF FIRE</h4>
+                        <div class="stat-item">
+                            <span class="stat-label">Total number of FIRE:</span>
+                            <span class="stat-number" id="fire-count">0</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Flood Stats -->
+                    <div class="stat-card">
+                        <h4>TOTAL NUMBER OF FLOOD</h4>
+                        <div class="stat-item">
+                            <span class="stat-label">Total number of FLOOD:</span>
+                            <span class="stat-number" id="flood-count">0</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Earthquake Stats -->
+                    <div class="stat-card">
+                        <h4>TOTAL NUMBER OF EARTHQUAKE</h4>
+                        <div class="stat-item">
+                            <span class="stat-label">Total number of EARTHQUAKE:</span>
+                            <span class="stat-number" id="earthquake-count">0</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Storm Surge Stats -->
+                    <div class="stat-card">
+                        <h4>TOTAL NUMBER OF STORM SURGE</h4>
+                        <div class="stat-item">
+                            <span class="stat-label">Total number of STORM SURGE:</span>
+                            <span class="stat-number" id="storm-count">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Medical Services Stats -->
+                    <div class="stat-card">
+                        <h4>TOTAL NUMBER OF MEDICAL SERVICES</h4>
+                        <div class="stat-item">
+                            <span class="stat-label">Total number of Medical Services:</span>
+                            <span class="stat-number" id="ems-count">1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script src="js/statistic.js"></script>
+    
+</body>
+
+</html>

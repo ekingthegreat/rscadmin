@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Portal - RSC</title>
+  <link rel="icon" type="image/png" href="img/logo.ico">
+  
+  <link rel="icon" type="image/png" href="assets/img/logo.ico">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+   
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="left-panel">
+      <div class="logo">RSC<span>Ready to Serve the Community</span></div>
+      
+      <div class="illustration">
+        <i class="fas fa-user-shield"></i>
+      </div>
+      
+      <div class="features-left">
+        <div class="feature-item">
+          <i class="fas fa-bullhorn"></i>
+          <div class="feature-text">Newsfeed & Events</div>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-chart-bar"></i>
+          <div class="feature-text">Analytics & Reports</div>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-users-cog"></i>
+          <div class="feature-text">User Management</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="right-panel">
+      <h1><span>Admin</span> Portal</h1>
+      <p class="subtitle">Manage the RSC emergency response system</p>
+      <button class="btn" id="getStartedBtn">GET STARTED <i class="fas fa-arrow-right"></i></button>
+      
+      <div class="admin-features">
+        <div class="admin-card">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Dashboard Overview</span>
+        </div>
+        <div class="admin-card">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span>Manage Alerts</span>
+        </div>
+        <div class="admin-card">
+          <i class="fas fa-user-friends"></i>
+          <span>User Management</span>
+        </div>
+        <div class="admin-card">
+          <i class="fas fa-bullhorn"></i>
+          <span>Newsfeed & Events</span>
+        </div>
+      </div>
+      
+      <div class="admin-info">
+        <h3>Admin Capabilities</h3>
+        <div class="admin-steps">
+          <div class="admin-step">
+            <div class="step-number">1</div>
+            <div class="step-text">Monitor System Status</div>
+          </div>
+          <div class="admin-step">
+            <div class="step-number">2</div>
+            <div class="step-text">Verify Emergency Alerts</div>
+          </div>
+          <div class="admin-step">
+            <div class="step-number">3</div>
+            <div class="step-text">Newsfeed & Events</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('getStartedBtn').addEventListener('click', function() {
+      // Add animation class
+      this.classList.add('clicked');
+      
+      // Redirect after animation completes
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 500);
+    });
+  </script>
+</body>
+</html>

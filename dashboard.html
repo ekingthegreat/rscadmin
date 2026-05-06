@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | RSC</title>
+    <link rel="icon" type="image/png" href="img/logo.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Add Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="css/dashboard.css">
+   
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1>RSC</h1>
+            <p>Ready to Serve the Community</p>
+        </div>
+        <!-- Hamburger icon -->
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <nav id="navbar">
+            <a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="interactivemap.html"><i class="fas fa-map"></i> Interactive Map</a>
+            <a href="statistic.html"><i class="fas fa-chart-bar"></i> Statistic</a>
+            <a href="notification.html"><i class="fas fa-bell"></i> Notification</a>
+            <a href="manageuser.html"><i class="fas fa-users-cog"></i> Manage Users</a>
+            <a href="announcement.html"><i class="fas fa-bullhorn"></i> Announcement</a>
+            <a href="myaccount.html"><i class="fas fa-user"></i> Profile</a>
+        </nav>
+    </header>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-content">
+        <!-- Stat Cards -->
+        <section class="stats">
+            <div class="card">
+                <h3>Total Users</h3>
+                <p class="number" id="totalUsers">0</p>
+                <span class="today" id="totalUsersToday">+0 Today</span>
+            </div>
+            <div class="card">
+                <h3>Response Team</h3>
+                <p class="number" id="responseTeam">0</p>
+                <span class="today" id="responseTeamToday">+0 Today</span>
+            </div>
+            <div class="card">
+                <h3>Incidents</h3>
+                <p class="number" id="totalIncidents">0</p>
+                <span class="today" id="incidentsToday">+0 Today</span>
+            </div>
+            <div class="card">
+                <h3>Mapping Success</h3>
+                <p class="number" id="mappingSuccess">0</p>
+                <span class="success" id="successRate">0% Success Rate</span>
+            </div>
+        </section>
+
+        <!-- Main Dashboard -->
+        <div class="dashboard-grid">
+            <!-- Left Column -->
+            <section class="left-column">
+                <div class="map">
+                    <h3>Interactive Map</h3>
+                    <div class="map-placeholder" id="mapContainer">
+                        <div id="googleMap"></div>
+                        <div class="map-controls">
+                            <button class="map-btn active" title="Current Location" id="currentLocationBtn"
+                                aria-label="Current location">
+                                <i class="fas fa-crosshairs"></i>
+                            </button>
+                            <button class="map-btn" title="Toggle map type" id="layersBtn" aria-label="Toggle map type">
+                                <i class="fas fa-layer-group"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="graph">
+                    <h3>Incident Trends</h3>
+                    <div class="graph-placeholder">
+                        <canvas id="incidentTrendsChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Column -->
+            <section class="right-column">
+                <!-- UPDATED NOTIFICATIONS SECTION -->
+                <div class="notifications">
+                    <h3>Notifications</h3>
+                    <div class="notifications-container" id="notificationsList">
+                        <!-- Loading state -->
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i> Loading notifications...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-users">
+                    <h3>Recent Approved Users</h3>
+                    <ul id="recentApprovedUsers">
+                        <!-- Loading state -->
+                        <li><i class="fas fa-spinner fa-spin"></i> Loading users...</li>
+                    </ul>
+                    <a href="manageuser.html">See All Members &gt;</a>
+                </div>
+
+                <!-- UPDATED: Quick Upload Section -->
+                <div class="upload">
+                    <h3>Quick Upload</h3>
+                    <div class="upload-box">
+                        <div class="file-upload">
+                            <label for="fileUpload" class="file-upload-label">
+                                <i class="fas fa-paperclip"></i> Select File
+                            </label>
+                            <input type="file" id="fileUpload" accept="image/*" multiple style="display: none;">
+                        </div>
+                        <div id="uploadPreviews" class="image-previews">
+                            <!-- Image previews will be added here -->
+                        </div>
+                        <textarea id="uploadMessage" placeholder="Type your message here..."></textarea>
+                        <button id="uploadSubmitBtn">Upload</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Logout Modal -->
+    <div class="modal-overlay" id="logoutModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Confirm Logout</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to log out?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel">Cancel</button>
+                <button class="btn-confirm">Yes, Log Out</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Details Modal -->
+    <div class="modal" id="reportModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div class="modal-media-container" id="modalMediaContainer">
+                <!-- Media will be loaded here -->
+            </div>
+            <div class="modal-body">
+                <h3 class="modal-title" id="modalTitle">Report Title</h3>
+                <div class="modal-info">
+                    <div class="modal-info-item">
+                        <span class="modal-label">Emergency Type</span>
+                        <span class="modal-value" id="modalType">Earthquake</span>
+                    </div>
+                    <div class="modal-info-item">
+                        <span class="modal-label">Status</span>
+                        <span class="modal-value" id="modalStatus">Reported</span>
+                    </div>
+                    <div class="modal-info-item">
+                        <span class="modal-label">Date</span>
+                        <span class="modal-value" id="modalDate">2025-09-27</span>
+                    </div>
+                    <div class="modal-info-item">
+                        <span class="modal-label">Time</span>
+                        <span class="modal-value" id="modalTime">11:17 PM</span>
+                    </div>
+                    <div class="modal-info-item">
+                        <span class="modal-label">Latitude</span>
+                        <span class="modal-value" id="modalLat">14.599513</span>
+                    </div>
+                    <div class="modal-info-item">
+                        <span class="modal-label">Longitude</span>
+                        <span class="modal-value" id="modalLng">120.984234</span>
+                    </div>
+                    <div class="modal-info-item">
+                        <span class="modal-label">Reported By</span>
+                        <span class="modal-value" id="modalReporter">Michael Martinez</span>
+                    </div>
+                    <div class="modal-info-item">
+                        <span class="modal-label">Description</span>
+                        <span class="modal-value" id="modalDescription">No description provided</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full Screen Modal -->
+    <div class="fullscreen-modal" id="fullscreenModal">
+        <div class="fullscreen-content">
+            <span class="fullscreen-close" id="fullscreenClose">&times;</span>
+            <img id="fullscreenMedia" class="fullscreen-media" src="" alt="Full Screen Media">
+            <div class="media-controls">
+                <button class="media-btn" id="zoomInBtn">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="media-btn" id="zoomOutBtn">
+                    <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="media-btn" id="rotateBtn">
+                    <i class="fas fa-redo"></i>
+                </button>
+                <button class="media-btn" id="downloadBtn">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: Gallery Modal for Multiple Images -->
+    <div id="galleryModal" class="gallery-modal">
+        <div class="gallery-container">
+            <div class="gallery-header">
+                <div class="gallery-count" id="galleryCount">1 / 5</div>
+                <button class="gallery-close">&times;</button>
+            </div>
+            <div class="gallery-main">
+                <button class="gallery-nav gallery-prev">&lt;</button>
+                <img class="gallery-main-image" id="galleryMainImage" src="" alt="">
+                <button class="gallery-nav gallery-next">&gt;</button>
+            </div>
+            <div class="gallery-thumbnails" id="galleryThumbnails">
+                <!-- Thumbnails will be added here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="js/firebaseconfig.js"></script>
+<script src="js/dash.js"></script>
+  
+</body>
+
+</html>

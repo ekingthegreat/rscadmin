@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Privacy | RSC Dashboard</title>
+    <link rel="icon" type="image/png" href="img/logo.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ <link rel="stylesheet" href="css/term_privacy.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1>RSC</h1>
+            <p>Ready to Serve the Community</p>
+        </div>
+        <!-- Hamburger icon for main navbar -->
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <nav id="navbar">
+            <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="interactivemap.html"><i class="fas fa-map"></i> Interactive Map</a>
+            <a href="statistic.html"><i class="fas fa-chart-bar"></i> Statistic</a>
+            <a href="notification.html"><i class="fas fa-bell"></i> Notification</a>
+            <a href="manageuser.html"><i class="fas fa-users-cog"></i> Manage Users</a>
+            <a href="announcement.html"><i class="fas fa-bullhorn"></i> Announcement</a>
+            <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="profile-container">
+            <div class="sidebar">
+                <div class="user-info">
+                    <div class="avatar" id="profileAvatar">
+                        <!-- Profile picture will be loaded here -->
+                        <i class="fas fa-user-circle" id="avatarIcon"></i>
+                    </div>
+                    <h3 id="profileFullname">System Admin</h3>
+                    <p id="profilePhone">0000-000-0000</p>
+                </div>
+                <!-- Hamburger icon for profile navigation -->
+                <div class="profile-menu-toggle" id="profileMenuToggle">
+                    <i class="fas fa-bars"></i> Profile Menu
+                </div>
+                <nav class="profile-nav" id="profileNav">
+                    <a href="myaccount.html"><i class="fas fa-user"></i> My Account</a>
+                    <a href="profile.html"><i class="fas fa-edit"></i> Edit Profile</a>
+                    <a href="changepass.html"><i class="fas fa-key"></i> Change Password</a>
+                    <a href="term_privacy.html" class="active"><i class="fas fa-file-contract"></i> Term and Privacy Policy</a>
+                    <a href="#" data-logout><i class="fas fa-sign-out-alt"></i> Log out</a>
+                </nav>
+            </div>
+
+            <div class="profile-content">
+                <div class="profile-card">
+                    <div class="profile-card-header">
+                        <div class="profile-card-title">
+                            <h2><i class="fas fa-file-contract"></i> Terms and Privacy Policy Management</h2>
+                        </div>
+                    </div>
+                    
+                    <div class="policy-container">
+                        <!-- Privacy Policy Column -->
+                        <div class="policy-column" id="privacy-policy">
+                            <div class="policy-header">
+                                <div>
+                                    <h1>Privacy Policy</h1>
+                                    <p id="privacy-last-updated">Last Updated: December 2024</p>
+                                </div>
+                                <button class="btn btn-add" id="add-privacy-section">
+                                    <i class="fas fa-plus"></i> Add Section
+                                </button>
+                            </div>
+                            
+                            <div class="policy-content" id="privacy-content">
+                                <!-- Privacy Policy content will be loaded here -->
+                            </div>
+                        </div>
+
+                        <!-- Terms of Service Column -->
+                        <div class="policy-column" id="terms-of-service">
+                            <div class="policy-header">
+                                <div>
+                                    <h1>Terms of Service</h1>
+                                    <p id="terms-last-updated">Last Updated: December 2024</p>
+                                </div>
+                                <button class="btn btn-add" id="add-terms-section">
+                                    <i class="fas fa-plus"></i> Add Section
+                                </button>
+                            </div>
+                            
+                            <div class="policy-content" id="terms-content">
+                                <!-- Terms of Service content will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Edit Section Modal - Improved for Readability -->
+    <div class="modal-overlay" id="edit-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="edit-modal-title">Edit Section</h3>
+                <button class="close-modal" id="close-edit-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="edit-mode">
+                    <div class="modal-form-group">
+                        <label for="edit-section-title">Section Title</label>
+                        <input type="text" id="edit-section-title" placeholder="Enter section title">
+                    </div>
+                    <div class="modal-form-group">
+                        <label for="edit-section-content">Section Content</label>
+                        <textarea id="edit-section-content" placeholder="Enter section content"></textarea>
+                    </div>
+                    <div class="editor-controls">
+                        <div class="editor-info">
+                            <span id="edit-section-info">Editing section</span>
+                        </div>
+                        <div>
+                            <button class="btn btn-cancel" id="cancel-edit-btn">Cancel</button>
+                            <button class="btn btn-save" id="save-edit-btn">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="confirmation-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Confirm Changes</h3>
+                <button class="close-modal" id="close-confirm-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to save these changes?</p>
+                <p id="modal-details">This will update the policy for all users.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" id="modal-cancel-btn">Cancel</button>
+                <button class="btn btn-save" id="modal-confirm-btn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="success-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Success</h3>
+                <button class="close-modal" id="close-success-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="success-message">Your changes have been saved successfully.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-save" id="success-ok-btn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Modal -->
+    <div class="modal-overlay" id="logoutModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Confirm Logout</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to log out?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel">Cancel</button>
+                <button class="btn btn-save">Yes, Log Out</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="js/firebaseconfig.js"></script>
+    <script src="js/term.js"></script>
+</body>
+</html>

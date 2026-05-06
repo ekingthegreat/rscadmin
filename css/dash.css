@@ -1,0 +1,643 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+:root {
+  --primary: #B80F0A;
+  --primary-dark: #800000;
+  --secondary: #f8f8f8;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-light: #999999;
+  --white: #ffffff;
+  --border: #e0e0e0;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --card-shadow: 0 3px 5px rgba(0, 0, 0, 0.04);
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-bottom: 2px solid #ddd;
+  padding: 10px 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+body {
+  background: #f8f9fa;
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 70px;
+}
+
+.logo h1 {
+  color: #B80F0A;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.logo p {
+  font-size: 14px;
+  color: #800000;
+  font-weight: 500;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #B80F0A;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  transition: all 0.3s ease;
+}
+
+nav a i {
+  color: #504B4B;
+  font-size: 16px;
+}
+
+nav a:hover {
+  color: #B80F0A;
+  transform: translateY(-2px);
+}
+
+nav a:hover i {
+  color: #B80F0A;
+}
+
+nav a.active {
+  color: #7a5555;
+  font-weight: bold;
+}
+
+nav a.active i {
+  color: #7a5555;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Dashboard Content */
+.dashboard-content {
+  flex: 1;
+  padding: 15px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Stat Cards - Smaller */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.card h3 {
+  color: var(--primary);
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.card .number {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.today {
+  color: #28a745;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.success {
+  color: #28a745;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* Main Dashboard - More Compact */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 15px;
+  height: calc(100vh - 220px);
+  min-height: 450px;
+}
+
+.left-column,
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.map,
+.graph,
+.recent-users,
+.upload {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: var(--card-shadow);
+}
+
+.map,
+.graph {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.map h3,
+.graph h3,
+.recent-users h3,
+.upload h3 {
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.map-placeholder,
+.graph-placeholder {
+  background: #f5f5f5;
+  flex: 1;
+  border: 1px dashed #ccc;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-light);
+  font-size: 0.85rem;
+}
+
+/* Recent Users - More Compact */
+.recent-users {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.recent-users ul {
+  list-style: none;
+  flex: 1;
+}
+
+.recent-users li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+
+.recent-users li:last-child {
+  border-bottom: none;
+}
+
+.recent-users i {
+  color: var(--primary);
+  font-size: 14px;
+}
+
+.recent-users a {
+  text-decoration: none;
+  font-size: 0.85rem;
+  color: var(--primary);
+  font-weight: 500;
+  margin-top: 8px;
+  display: inline-block;
+}
+
+.recent-users a:hover {
+  text-decoration: underline;
+}
+
+/* Upload - More Compact */
+.upload {
+  display: flex;
+  flex-direction: column;
+}
+
+.upload-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.file-upload {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.file-upload-label {
+  padding: 6px 10px;
+  background: var(--primary);
+  color: white;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.file-upload-label:hover {
+  background: var(--primary-dark);
+}
+
+textarea {
+  resize: none;
+  height: 70px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  transition: border 0.3s ease;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+button {
+  background: var(--primary);
+  color: white;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: var(--primary-dark);
+}
+
+/* NEW NOTIFICATION STYLES */
+.notifications {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: var(--card-shadow);
+}
+
+.notification-card {
+  display: flex;
+  align-items: flex-start;
+  padding: 12px;
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid #eee;
+  transition: all 0.3s ease;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.notification-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  border-color: #B80F0A;
+}
+
+.notification-card.unread {
+  background: #fff9f9;
+  border-left: 3px solid #B80F0A;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.notification-message {
+  font-size: 0.8rem;
+  color: #666;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.notification-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notification-time {
+  font-size: 0.7rem;
+  color: #888;
+}
+
+.notification-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.notification-btn {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.notification-btn:hover {
+  color: #B80F0A;
+  background: #f8f8f8;
+}
+
+.emergency-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #ff4d4f;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Logout Modal Styles */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-container {
+  background-color: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.modal-header {
+  background-color: var(--primary);
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.modal-header .close-modal {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-body p {
+  margin: 0;
+  color: #333;
+  line-height: 1.5;
+}
+
+.modal-footer {
+  padding: 15px 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid #eee;
+}
+
+.modal-footer button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-cancel {
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+}
+
+.btn-cancel:hover {
+  background-color: #e0e0e0;
+}
+
+.btn-confirm {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+}
+
+.btn-confirm:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .left-column,
+  .right-column {
+    height: auto;
+  }
+
+  .map,
+  .graph {
+    height: 250px;
+  }
+}
+
+@media (max-width: 992px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 10px 15px;
+  }
+
+  nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    right: 15px;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 12px;
+    border-radius: 6px;
+    width: 200px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+  }
+
+  nav.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .dashboard-content {
+    padding: 12px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .dashboard-grid {
+    gap: 12px;
+  }
+
+  .map,
+  .graph,
+  .notifications,
+  .recent-users,
+  .upload {
+    padding: 12px;
+  }
+
+  .notification-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .notification-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo h1 {
+    font-size: 24px;
+  }
+
+  .logo p {
+    font-size: 12px;
+  }
+
+  .card .number {
+    font-size: 20px;
+  }
+
+  .map,
+  .graph {
+    height: 200px;
+  }
+
+  .stats {
+    gap: 10px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  .notification-card {
+    flex-direction: column;
+  }
+
+  .notification-actions {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .notification-btn {
+    width: 100%;
+    text-align: left;
+    padding: 4px 8px;
+  }
+}

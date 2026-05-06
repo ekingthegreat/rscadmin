@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Interactive Map | RSC Dashboard</title>
+  <link rel="icon" type="image/png" href="img/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/interactivemap.css">
+
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+      <h1>RSC</h1>
+      <p>Ready to Serve the Community</p>
+    </div>
+    <div class="menu-toggle" id="menu-toggle"><i class="fas fa-bars"></i></div>
+    <nav id="navbar">
+      <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="interactivemap.html" class="active"><i class="fas fa-map"></i> Interactive Map</a>
+      <a href="statistic.html"><i class="fas fa-chart-bar"></i> Statistic</a>
+      <a href="notification.html"><i class="fas fa-bell"></i> Notification</a>
+      <a href="manageuser.html"><i class="fas fa-users-cog"></i> Manage Users</a>
+      <a href="announcement.html"><i class="fas fa-bullhorn"></i> Announcement</a>
+      <a href="myaccount.html"><i class="fas fa-user"></i> Profile</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="filter-section">
+      <div class="filter-group">
+        <label for="statusFilter">Status</label>
+        <select id="statusFilter" class="filter-select">
+          <option value="all">All Statuses</option>
+          <option value="pending">Pending</option>
+          <option value="mapped">Resolved</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="typeFilter">Disaster Type</label>
+        <select id="typeFilter" class="filter-select">
+          <option value="all">All Types</option>
+          <option value="landslide">Landslide</option>
+          <option value="fire">Fire</option>
+          <option value="earthquake">Earthquake</option>
+          <option value="storm">Storm Surge</option>
+          <option value="flood">Flood</option>
+          <option value="ems">EMS</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="dateFilter">Date Range</label>
+        <select id="dateFilter" class="filter-select">
+          <option value="all">All Dates</option>
+          <option value="today">Today</option>
+          <option value="week">This Week</option>
+          <option value="month">This Month</option>
+          <option value="custom">Custom Date</option>
+        </select>
+      </div>
+      <div class="filter-group" id="customDateGroup" style="display: none;">
+        <label for="customDate">Select Date</label>
+        <input type="date" id="customDate" class="filter-input">
+      </div>
+      <div class="filter-actions">
+        <button class="filter-btn info" id="viewAllReportsBtn"><i class="fas fa-list"></i> Logs</button>
+        <button class="filter-btn secondary" id="resetFilter"><i class="fas fa-redo"></i> Reset</button>
+      </div>
+    </section>
+
+    <section class="map">
+      <div id="googleMap"></div>
+      <div class="map-controls">
+        <button class="map-btn" id="currentLocationBtn" title="My Location"><i class="fas fa-crosshairs"></i></button>
+        <button class="map-btn" id="layersBtn" title="Switch View"><i class="fas fa-layer-group"></i></button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="legend">
+    <h3><i class="fas fa-info-circle"></i> Map Legend</h3>
+    <ul>
+      <li><i class="fas fa-map-marker-alt brown"></i> Landslide</li>
+      <li><i class="fas fa-map-marker-alt red"></i> Fire</li>
+      <li><i class="fas fa-map-marker-alt orange"></i> Earthquake</li>
+      <li><i class="fas fa-map-marker-alt teal"></i> Storm Surge</li>
+      <li><i class="fas fa-map-marker-alt blue"></i> Flood</li>
+      <li><i class="fas fa-map-marker-alt green"></i> EMS</li>
+    </ul>
+  </footer>
+
+  <div class="modal" id="reportModal" style="z-index: 2100;">
+    <div class="modal-content">
+      <div class="close-modal" id="closeModal">×</div>
+      <div class="modal-media-container" id="modalMediaContainer"></div>
+      <div class="modal-body">
+        <div class="modal-header-section">
+            <h2 class="modal-title" id="modalTitle">Incident Title</h2>
+            <div class="modal-subtitle">
+                <span id="modalDateDisplay"></span> • Reported by <strong id="modalReporter"></strong>
+            </div>
+        </div>
+        <div class="info-grid">
+            <div class="info-card">
+                <span class="info-label">Type</span>
+                <span class="info-value" id="modalType">Fire</span>
+            </div>
+            <div class="info-card">
+                <span class="info-label">Current Status</span>
+                <span class="info-value" id="modalStatus"><span class="badge badge-pending">Pending</span></span>
+            </div>
+            <div class="info-card">
+                <span class="info-label">Time</span>
+                <span class="info-value" id="modalTime">12:00 PM</span>
+            </div>
+            <div class="info-card">
+                <span class="info-label">Coordinates</span>
+                <span class="info-value" style="font-family:monospace; font-size:0.9rem;">
+                    <span id="modalLat"></span>, <span id="modalLng"></span>
+                </span>
+            </div>
+        </div>
+        <div class="section-title"><i class="fas fa-paperclip"></i> Attached Evidence & Files</div>
+        <div class="table-responsive">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>Uploaded By</th>
+                        <th>Type</th>
+                        <th style="text-align:right">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="incidentFilesBody"></tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="allReportsModal" style="z-index: 2000;">
+    <div class="modal-content" style="max-width: 1200px;">
+      <div class="close-modal" id="closeAllReportsModal">×</div>
+      <div class="modal-body">
+        <h2 class="modal-title" style="margin-bottom: 20px;">Incident Log</h2>
+        
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number" id="totalReports">0</div>
+                <div class="stat-label">Total Reports</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="color:var(--warning)" id="pendingReports">0</div>
+                <div class="stat-label">Pending</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="color:var(--info)" id="acceptedReports">0</div>
+                <div class="stat-label">In Progress</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="color:var(--success)" id="mappedReports">0</div>
+                <div class="stat-label">Resolved</div>
+            </div>
+        </div>
+
+        <div class="modal-filter-bar">
+            <button class="modal-filter-btn active" onclick="filterModalTable('all', this)">All</button>
+            <button class="modal-filter-btn" onclick="filterModalTable('pending', this)">Pending</button>
+            <button class="modal-filter-btn" onclick="filterModalTable('resolved', this)">Resolved</button>
+        </div>
+
+        <div id="reportsLoading" class="loading-state">
+            <i class="fas fa-spinner fa-spin fa-2x"></i>
+            <p style="margin-top:10px">Synchronizing data...</p>
+        </div>
+
+        <div class="table-responsive">
+            <table class="custom-table" id="reportsTable" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Reporter</th>
+                        <th>Timestamp</th>
+                        <th>Team</th>
+                        <th>Location</th>
+                        <th style="text-align:right">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="reportsTableBody"></tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fullscreen-modal" id="fullscreenModal">
+    <div class="fullscreen-content">
+      <div class="close-modal" id="fullscreenClose" style="background:rgba(255,255,255,0.2); color:white;">×</div>
+      <img id="fullscreenMedia" class="fullscreen-media" src="" alt="Fullscreen">
+    </div>
+    <div class="fs-controls">
+        <button class="fs-btn" id="zoomOutBtn"><i class="fas fa-minus"></i></button>
+        <button class="fs-btn" id="zoomInBtn"><i class="fas fa-plus"></i></button>
+        <button class="fs-btn" id="rotateBtn"><i class="fas fa-redo"></i></button>
+        <button class="fs-btn" id="downloadBtn"><i class="fas fa-download"></i></button>
+    </div>
+  </div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="js/interactivemap.js"></script>
+
+</body>
+</html>

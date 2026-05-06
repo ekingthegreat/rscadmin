@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users | RSC Dashboard</title>
+    <link rel="icon" type="image/png" href="img/logo.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/manage.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1>RSC</h1>
+            <p>Ready to Serve the Community</p>
+        </div>
+        <!-- Hamburger icon -->
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <nav id="navbar">
+            <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="interactivemap.html"><i class="fas fa-map"></i> Interactive Map</a>
+            <a href="statistic.html"><i class="fas fa-chart-bar"></i> Statistic</a>
+            <a href="notification.html"><i class="fas fa-bell"></i> Notification</a>
+            <a href="manageuser.html" class="active"><i class="fas fa-users-cog"></i> Manage Users</a>
+            <a href="announcement.html"><i class="fas fa-bullhorn"></i> Announcement</a>
+            <a href="myaccount.html"><i class="fas fa-user"></i> Profile</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h2>User Management</h2>
+        </div>
+
+        <!-- Section Toggle Buttons -->
+        <div class="section-toggle">
+            <button class="toggle-btn active" id="pendingToggle">
+                <i class="fas fa-user-clock"></i> Pending Users
+            </button>
+            <button class="toggle-btn" id="rejectedToggle">
+                <i class="fas fa-user-times"></i> Rejected Users
+            </button>
+        </div>
+
+        <!-- Pending Users Section -->
+        <div class="approval-section" id="pendingSection">
+            <h3 class="approval-title"><i class="fas fa-user-clock"></i> Pending User Approvals</h3>
+
+            <div class="pending-users-container" id="pendingUsersContainer">
+                <!-- Pending users will be loaded here dynamically -->
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i> Loading pending users...
+                </div>
+            </div>
+        </div>
+
+        <!-- Rejected Users Section -->
+        <div class="rejected-section" id="rejectedSection">
+            <h3 class="rejected-title"><i class="fas fa-user-times"></i> Rejected Users</h3>
+
+            <div class="rejected-users-container" id="rejectedUsersContainer">
+                <!-- Rejected users will be loaded here dynamically -->
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i> Loading rejected users...
+                </div>
+            </div>
+        </div>
+
+        <!-- User Tables -->
+        <div class="user-tables">
+            <!-- Global Filter Controls -->
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <span class="filter-label">Filter by Status:</span>
+                    <select id="statusFilter" class="filter-select">
+                        <option value="all">All Statuses</option>
+                        <option value="approved">Approved</option>
+                        <option value="pending">Pending</option>
+                        <option value="blocked">Blocked</option>
+                    </select>
+                    
+                    <span class="filter-label">Filter by Address:</span>
+                    <select id="addressFilter" class="filter-select">
+                        <option value="all">All Addresses</option>
+                        <!-- Address options will be populated dynamically -->
+                    </select>
+
+                    <span class="filter-label">Filter by Captain:</span>
+                    <select id="captainFilter" class="filter-select">
+                        <option value="all">All Captains</option>
+                        <!-- Captain options will be populated dynamically -->
+                    </select>
+                </div>
+            </div>
+
+            <!-- Hierarchical User Structure -->
+            <div class="user-table-container">
+                <div class="table-header">
+                    <h3 class="table-title">Barangay Structure</h3>
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search users..."
+                            oninput="filterHierarchicalStructure(this.value)">
+                    </div>
+                </div>
+                <div class="hierarchical-container" id="hierarchicalContainer">
+                    <!-- Hierarchical structure will be loaded here -->
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner fa-spin"></i> Loading barangay structure...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Response Team Table (Separate) -->
+            <div class="user-table-container">
+                <div class="table-header">
+                    <h3 class="table-title">Response Team</h3>
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search response team..."
+                            oninput="filterTable('responseTeamTable', this.value)">
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="user-table" id="responseTeamTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Response team will be loaded here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- User Details Modal -->
+    <div class="modal-overlay" id="userDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">User Details</h3>
+                <button class="close-modal" onclick="closeUserDetails()">&times;</button>
+            </div>
+            <div class="user-details-grid" id="userDetailsContent">
+                <!-- User details will be populated here -->
+            </div>
+            <div class="modal-actions" id="modalActions">
+                <!-- Action buttons will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Full Screen Image Modal -->
+    <div class="image-modal-overlay" id="imageModal">
+        <button class="image-modal-close" onclick="closeImageModal()">&times;</button>
+        <div class="image-modal-content">
+            <img id="fullscreenImage" class="fullscreen-image" src="" alt="Profile Picture">
+        </div>
+        <div class="image-modal-info">
+            <div class="image-user-name" id="imageUserName"></div>
+            <div class="image-user-role" id="imageUserRole"></div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="js/manage.js"></script>
+</body>
+
+</html>

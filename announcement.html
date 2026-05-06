@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcements | RSC Dashboard</title>
+    <link rel="icon" type="image/png" href="img/logo.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Add Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>    
+    <link rel="stylesheet" href="css/announcement.css">
+
+</head>
+
+<body>
+    <!-- Header from first code -->
+    <header>
+        <div class="logo">
+            <h1>RSC</h1>
+            <p>Ready to Serve the Community</p>
+        </div>
+        <!-- Hamburger icon -->
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <nav id="navbar">
+            <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="interactivemap.html"><i class="fas fa-map"></i> Interactive Map</a>
+            <a href="statistic.html"><i class="fas fa-chart-bar"></i> Statistic</a>
+            <a href="notification.html"><i class="fas fa-bell"></i> Notification</a>
+            <a href="manageuser.html"><i class="fas fa-users-cog"></i> Manage Users</a>
+            <a href="announcement.html" class="active"><i class="fas fa-bullhorn"></i> Announcement</a>
+            <a href="myaccount.html"><i class="fas fa-user"></i> Profile</a>
+        </nav>
+    </header>
+
+    <!-- Mobile Events Section (Visible only on mobile) -->
+    <div class="mobile-events">
+        <h3>Upcoming Events</h3>
+        <div id="mobileEventsList">
+            <!-- Events will be loaded here dynamically -->
+        </div>
+    </div>
+
+    <!-- Page Header with Buttons -->
+    <div class="page-header">
+        <h2>Announcements</h2>
+        <div class="header-buttons">
+            <button class="submit-btn" id="newEventBtn">
+                <i class="fas fa-calendar-plus"></i> New Event
+            </button>
+            <button class="submit-btn" id="newAnnouncementBtn">
+                <i class="fas fa-bullhorn"></i> New Announcement
+            </button>
+            <button class="submit-btn view-blocked-btn" id="viewBlockedBtn">
+                <i class="fas fa-ban"></i> View Blocked Posts
+            </button>
+        </div>
+    </div>
+
+    <!-- Announcement Form -->
+    <div class="announcement-form" id="announcementForm">
+        <h3 class="form-title">Create New Announcement</h3>
+        <div class="upload-section" id="uploadSection">
+            <i class="fas fa-cloud-upload-alt upload-icon"></i>
+            <p class="upload-text">Drag & drop your images here or click to browse</p>
+            <input type="file" id="imageUpload" accept="image/*" multiple style="display: none;">
+            <button class="btn-upload" id="uploadBtn">
+                <i class="fas fa-upload"></i> Upload Images
+            </button>
+            <div id="imagePreviews" class="image-previews">
+                <!-- Image previews will be added here -->
+            </div>
+        </div>
+        <textarea class="description-box" id="announcementText" placeholder="Type your announcement here..."></textarea>
+        <button class="submit-btn" id="publishAnnouncementBtn">
+            <i class="fas fa-paper-plane"></i> Publish Announcement
+        </button>
+    </div>
+
+    <!-- Event Form -->
+    <div class="announcement-form" id="eventForm">
+        <h3 class="form-title" id="eventFormTitle">Create New Event</h3>
+
+        <div class="form-group event-field">
+            <label class="form-label">Event Title</label>
+            <input type="text" class="form-input" id="eventTitle" placeholder="Enter event title">
+        </div>
+
+        <div class="form-group event-field">
+            <label class="form-label">Date & Time</label>
+            <div class="datetime-group">
+                <input type="date" class="form-input" id="eventDate">
+                <input type="time" class="form-input" id="eventTime">
+            </div>
+        </div>
+
+        <div class="form-group event-field">
+            <label class="form-label">Location</label>
+            <input type="text" class="form-input" id="eventLocation" placeholder="Enter event location">
+        </div>
+
+        <div class="form-group event-field">
+            <label class="form-label">Participants</label>
+            <input type="text" class="form-input" id="eventParticipants" placeholder="Who should attend">
+        </div>
+
+        <button class="submit-btn" id="createEventBtn">
+            <i class="fas fa-paper-plane"></i> Create Event
+        </button>
+
+        <button class="submit-btn" id="updateEventBtn" style="display: none; background-color: #4CAF50;">
+            <i class="fas fa-save"></i> Update Event
+        </button>
+
+        <button class="submit-btn" id="cancelEditBtn" style="display: none; background-color: #6c757d;">
+            <i class="fas fa-times"></i> Cancel Edit
+        </button>
+
+        <input type="hidden" id="editingEventId" value="">
+        <input type="hidden" id="editingEventKey" value="">
+    </div>
+
+    <!-- Blocklist Section -->
+    <div class="blocklist-section" id="blocklistSection">
+        <h3>Blocked Posts</h3>
+        <div id="blockedPostsList">
+            <!-- Blocked posts will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Single Image Modal for Full Display -->
+    <div id="imageModal" class="modal" style="display: none;">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <!-- NEW: Multi-image Gallery Modal -->
+    <div id="galleryModal" class="gallery-modal">
+        <div class="gallery-container">
+            <div class="gallery-header">
+                <div class="gallery-count" id="galleryCount">1 / 5</div>
+                <button class="gallery-close">&times;</button>
+            </div>
+            <div class="gallery-main">
+                <button class="gallery-nav gallery-prev">&lt;</button>
+                <img class="gallery-main-image" id="galleryMainImage" src="" alt="">
+                <button class="gallery-nav gallery-next">&gt;</button>
+            </div>
+            <div class="gallery-thumbnails" id="galleryThumbnails">
+                <!-- Thumbnails will be added here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="content">
+            <div class="posts-container" id="postsContainer">
+                <!-- Posts will be loaded dynamically -->
+            </div>
+        </div>
+
+        <!-- Sidebar - Desktop Only -->
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <h3>Upcoming Events</h3>
+                <div id="desktopEventsList">
+                    <!-- Events will be loaded here dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script src="js/announcement.js"></script>
+</body>
+
+</html>

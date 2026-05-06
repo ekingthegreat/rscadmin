@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> My Account | RSC Dashboard</title>
+    <link rel="icon" type="image/png" href="img/logo.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <link rel="stylesheet" href="css/myacc.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1>RSC</h1>
+            <p>Ready to Serve the Community</p>
+        </div>
+        <!-- Hamburger icon for main navbar -->
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <nav id="navbar">
+            <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="interactivemap.html"><i class="fas fa-map"></i> Interactive Map</a>
+            <a href="statistic.html"><i class="fas fa-chart-bar"></i> Statistic</a>
+            <a href="notification.html"><i class="fas fa-bell"></i> Notification</a>
+            <a href="manageuser.html"><i class="fas fa-users-cog"></i> Manage Users</a>
+            <a href="announcement.html"><i class="fas fa-bullhorn"></i> Announcement</a>
+            <a href="profile.html" class="active"><i class="fas fa-user"></i> Profile</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="profile-container">
+            <div class="sidebar">
+                <div class="user-info">
+                    <div class="avatar" id="profileAvatar">
+                        <!-- Profile picture will be loaded here -->
+                        <i class="fas fa-user-circle" id="avatarIcon"></i>
+                    </div>
+                    <h3 id="profileFullname">System Admin</h3>
+                    <p id="profilePhone">0000-000-0000</p>
+                </div>
+                <!-- Hamburger icon for profile navigation -->
+                <div class="profile-menu-toggle" id="profileMenuToggle">
+                    <i class="fas fa-bars"></i> Profile Menu
+                </div>
+                <nav class="profile-nav" id="profileNav">
+                    <a href="myaccount.html" class="active"><i class="fas fa-user"></i> My Account</a>
+                    <a href="profile.html"><i class="fas fa-edit"></i> Edit Profile</a>
+                    <a href="changepass.html"><i class="fas fa-key"></i> Change Password</a>
+                    <a href="term_privacy.html"><i class="fas fa-file-contract"></i> Term and Privacy Policy</a>
+                    <a href="#" data-logout><i class="fas fa-sign-out-alt"></i> Log out</a>
+                </nav>
+            </div>
+
+            <div class="profile-content">
+                <div class="profile-card">
+                    <div class="profile-card-header">
+                        <div class="profile-card-avatar" id="profileCardAvatar">
+                            <!-- Profile picture will be loaded here -->
+                            <i class="fas fa-user-circle" id="profileCardIcon"></i>
+                        </div>
+                        <div class="profile-card-title">
+                            <h2><i class="fas fa-user-circle"></i> My Account</h2>
+                        </div>
+                    </div>
+                    <div class="account-info">
+                        <div class="info-group">
+                            <label>Full Name</label>
+                            <p><i class="fas fa-user"></i> <span id="accountFullname">System Admin</span></p>
+                        </div>
+                        <div class="info-group">
+                            <label>Username</label>
+                            <p><i class="fas fa-at"></i> <span id="accountUsername">sysadmin</span></p>
+                        </div>
+                        <div class="info-group">
+                            <label>Contact Number</label>
+                            <p><i class="fas fa-phone"></i> <span id="accountPhone">0000-000-0000</span></p>
+                        </div>
+                        <div class="info-group">
+                            <label>Email</label>
+                            <p><i class="fas fa-envelope"></i> <span id="accountEmail">example@gmail.com</span></p>
+                        </div>
+                        <div class="info-group">
+                            <label>Role</label>
+                            <p><i class="fas fa-user-shield"></i> <span id="accountRole">admin</span></p>
+                        </div>
+                        <div class="info-group">
+                            <label>User ID</label>
+                            <p><i class="fas fa-id-card"></i> <span id="accountId">admin001</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Profile Picture Modal -->
+    <div class="profile-modal" id="profileModal">
+        <button class="close-modal" id="closeProfileModal">&times;</button>
+        <div class="profile-modal-content">
+            <img id="modalProfileImage" src="" alt="Profile Picture">
+        </div>
+    </div>
+
+    <!-- Logout Modal -->
+    <div class="modal-overlay" id="logoutModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Confirm Logout</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to log out?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel">Cancel</button>
+                <button class="btn-confirm">Yes, Log Out</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script src="js/myacc.js"></script>
+</body>
+
+</html>
