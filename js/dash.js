@@ -602,7 +602,7 @@ const emergencyTypeNames = {
 
 // Map Functions
 // Replace this with your actual Google Maps API key
-const API_KEY = "AIzaSyDd2_QgxGXWa4Vs_xKl5cJg6gpZQxC3sNk"; // Make sure to put your actual key between the quotes
+const API_KEY = ""; // Make sure to put your actual key between the quotes
 
 // Function to load Google Maps API
 function loadGoogleMapsAPI() {
