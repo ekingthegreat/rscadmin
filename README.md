@@ -32,7 +32,7 @@ This system is built to improve disaster preparedness and response by allowing a
 ## 🛠️ Tech Stack
 
 - **Frontend:** HTML, CSS, JavaScript
-- **Database:** Firebase (depending on configuration)  
+- **Database:** Firebase (Real-time Database)
 - **Tools:** Git, VS Code
 
 ---
